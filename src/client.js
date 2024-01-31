@@ -1,6 +1,6 @@
 const Bacon = require('baconjs')
 const RawSdcpClient = require('./raw-client')
-const {commands, actions, aspectRatio, powerStatus} = require('./commands')
+const {commands, actions, aspectRatio, powerStatus, lensmemory} = require('./commands')
 
 function SdcpClient(config = {}) {
 	const rawClient = RawSdcpClient(config)
@@ -24,6 +24,14 @@ function SdcpClient(config = {}) {
 				.flatMap(() => {
 					return rawClient.getAction(commands.ASPECT_RATIO)
 						.flatMap(result => Bacon.once(convertAspectRatioToString(result)))
+				})
+				.firstToPromise()
+		},
+		setlensmemory: (lm) => {
+			return rawClient.setAction(commands.lens_memory, lm)
+				.flatMap(() => {
+					return rawClient.getAction(commands.lens_memory)
+						.flatMap(result => Bacon.once(convertlensmemoryToString(result)))
 				})
 				.firstToPromise()
 		},
