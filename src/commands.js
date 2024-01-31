@@ -3,6 +3,15 @@ Commands acquired from Sony video projector PROTOCOL MANUAL 1st Edition.
 (Shady PDF from: https://www.digis.ru/upload/iblock/f5a/VPL-VW320,%20VW520_ProtocolManual.pdf )
 */
 
+
+	//PJTalk Command: "Set IR_LensZoomLarge" 
+	//Request=Set           => 0x00
+	//Item=IR_LensZoomLarge => 0x1777
+	//DataLength=2          => 0x02
+	//Data=0000             => 0x0000
+  // 0x00, 0x1772, 0x02, 0x0000
+
+
 const actions = {
   GET: '01',
   SET: '00'
@@ -17,6 +26,23 @@ const commands = {
   GET_STATUS_POWER: '0102',
   GET_STATUS_LAMP_TIMER: '0113'
 }
+
+//Added Commands for Set IR_Lens (fake Memory Lens)
+const memorylens = {
+  ShiftUp: '1772',
+  ShiftDown: '1773',
+  FocusFar: '1774',
+  FocusNear: '1775',
+  ZoomLarge: '1777',
+  ZoomSmall: '1778',
+  CursorRight: '1733',
+  CursorLeft: '1734',
+  CursorUp: '1735',
+  CursorDown: '1736',
+  Enter: '175A',
+  Menu : '1729'
+}
+
 
 const aspectRatio = {
   NORMAL: '0001',
