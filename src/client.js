@@ -27,13 +27,15 @@ function SdcpClient(config = {}) {
 				})
 				.firstToPromise()
 		},
-		setlensmemory: (lm) => {
-			return rawClient.setAction(commands.lens_memory, lm)
-				.flatMap(() => {
-					return rawClient.getAction(commands.lens_memory)
-						.flatMap(result => Bacon.once(convertlensmemoryToString(result)))
-				})
-				.firstToPromise()
+		setMemoryLensCommand: (command) => {
+		      const cmd = memorylens[command]
+		      if (!cmd) {
+		        return Bacon.Error(`Unknown memory lens command: ${command}`)
+		      }
+		      return rawClient.setAction(commands.LENS_MEMORY, cmd).firstToPromise()
+		    },
+		    getMemoryLensCommand: () => {
+		      return rawClient.getAction(commands.LENS_MEMORY).firstToPromise()
 		},
 		getAspectRatio: () => {
 			return rawClient.getAction(commands.ASPECT_RATIO)
